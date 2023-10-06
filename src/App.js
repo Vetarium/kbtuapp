@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [todoText, setTodoText] = useState('');
+  const [todoDescription, setTodoDescription] = useState('');
+
+  const handleAddTodo = () => {
+    if (todoText.trim() !== '') {
+      setTodos([...todos, todoText]);
+      setTodoText('');
+    }
+    if (todoDescription.trim() !== '') {
+      setTodos([...todos, todoDescription]);
+      setTodoDescription('');
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> App is working now he-he.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo List</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Add a new todo..."
+          value={todoText}
+          onChange={(e) => setTodoText(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Add description."
+          value={todoDescription}
+          onChange={(e) => setTodoDescription(e.target.value)}
+        />
+        <button onClick={handleAddTodo}>Add Todo</button>
+      </div>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
     </div>
   );
 }
